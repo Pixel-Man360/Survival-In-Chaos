@@ -70,9 +70,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 8b28f7e1e4e71bf4d919b9e681cf9f26, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8867924, g: 0.27189392, b: 0.35649103, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -122,7 +122,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.5
+  m_Time: 0.4
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -132,28 +132,28 @@ TrailRenderer:
       - serializedVersion: 3
         time: 0
         value: 1
-        inSlope: 2.3265307
-        outSlope: 2.3265307
+        inSlope: 0.894408
+        outSlope: 0.894408
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.23333333
+        outWeight: 0.2584266
       - serializedVersion: 3
         time: 1
-        value: 0.14285713
-        inSlope: 1.9780222
-        outSlope: 1.9780222
+        value: 0
+        inSlope: 0.047619045
+        outSlope: 0.047619045
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.21666664
+        inWeight: 0.3
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0.8962264, g: 0.4407557, b: 0.37624598, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 0.39607844}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -215,7 +215,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2832807647431050571}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 26.3, y: 23.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2832807646209338983}
@@ -251,7 +251,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 0.8
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 6200000, guid: 20e881a2faa08e444944dae698d368cf, type: 2}
@@ -271,9 +271,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0b45f8d1cb2377408ce551b342f485a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fallingSpeed: 2
-  _xForce: 100
-  _yForce: 200
-  _playerYPos: -37.5
-  _playerXPosMin: -30.7
-  _playerXPosMax: 7.5
+  _rb: {fileID: 2832807647431050549}
+  _fallSpeed: 2
