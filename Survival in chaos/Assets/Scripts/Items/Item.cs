@@ -6,6 +6,8 @@ public class Item : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D _rb;
     [SerializeField] private float _fallSpeed;
+
+    private float _backTimeIfNotDestroyed = 0f;
     void OnCollisionEnter2D(Collision2D other)
     {
         if(other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Bullet"))
@@ -19,6 +21,17 @@ public class Item : MonoBehaviour
         
         else 
           _rb.gravityScale = 1f;
+    }
+
+    void Update()
+    {
+        _backTimeIfNotDestroyed += Time.deltaTime;
+
+        if(_backTimeIfNotDestroyed >= 20f)
+        {
+            _backTimeIfNotDestroyed = 0f;
+            ItemsPuller.instance.ReturnToPool(this);
+        }
     }
    
 }

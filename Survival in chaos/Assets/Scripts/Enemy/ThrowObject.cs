@@ -8,22 +8,40 @@ public class ThrowObject : MonoBehaviour
     [SerializeField] private Transform _launchPoint;
     [SerializeField] private Transform _target;
     [SerializeField] private float _gravity = 9.8f;
-    [SerializeField] private float _throwBreak;
+    public float throwBreak;
     [SerializeField] private int _throwDirection = -1;
     [SerializeField] private float _angleOffsetMin;
     [SerializeField] private float _angleOffsetMax;
+
     private bool _canThrow = true;
 
+    private bool _waveStart = false;
+
+    void OnEnable()
+    {
+        GameManager.OnWaveStart += WaveStarted;
+    }
+
+    void OnDisable()
+    {
+        GameManager.OnWaveStart -= WaveStarted;
+    }
+
+    void WaveStarted(bool permission) => _waveStart = permission;
+    
     void Update()
     {
-        if(_canThrow)
+        if(_canThrow && _waveStart)
         {
           float? rotation = RotateLauncher();
 
           if (rotation != null)
            {
-               Throw();
-               StartCoroutine(ResetThrowing());
+               if(throwBreak <= 0.8f)
+               {
+                   throwBreak = 0.8f;
+               } 
+               Throw(); 
            } 
         }
         
@@ -32,7 +50,7 @@ public class ThrowObject : MonoBehaviour
     IEnumerator ResetThrowing()
     {
         _canThrow = false;
-        yield return new WaitForSeconds(_throwBreak);
+        yield return new WaitForSeconds(throwBreak);
         _canThrow = true;
     }
 
@@ -42,6 +60,7 @@ public class ThrowObject : MonoBehaviour
         obj.gameObject.transform.position = _launchPoint.transform.position;
         obj.gameObject.SetActive(true);
         obj.gameObject.GetComponent<Rigidbody2D>().velocity = _speed * _throwDirection * _launchPoint.transform.right;
+        StartCoroutine(ResetThrowing());
     }
 
     float? RotateLauncher()

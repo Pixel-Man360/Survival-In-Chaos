@@ -47,13 +47,11 @@ public class Reload : MonoBehaviour
     public void ButtonHighlighted()
     {
         OnButtonHighlighted?.Invoke(true);
-        Debug.Log("Hovering....");
     }
 
     public void ButtunNotHighlighted()
     {
-        OnButtonHighlighted?.Invoke(false);
-        Debug.Log("Won't Reload now.");
+        OnButtonHighlighted?.Invoke(false);   
     }
 
      

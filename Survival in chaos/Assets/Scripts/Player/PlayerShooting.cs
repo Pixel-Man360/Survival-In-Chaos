@@ -8,8 +8,8 @@ public class PlayerShooting : MonoBehaviour
     
     [SerializeField] private Gun _gun;
     [SerializeField] private Transform _shootPoint;
-    [SerializeField] private float _reloadTime = 1.5f;
-
+    [SerializeField] private float _reloadTime = 1f;
+    [SerializeField] private ParticleSystem _muzzleFlash;
 
     private bool _canShoot = true;
     private float _angle;
@@ -62,11 +62,12 @@ public class PlayerShooting : MonoBehaviour
 
         if(Input.GetButton("Fire1") && _canShoot && !_isReloadPressed && !_isButtonHighlighted)
         {
+           _muzzleFlash.Play();
            OnShoot?.Invoke();
            Aim();
-           ClampAngle();
            ReloadCheck();
            Shoot();
+           Recoil();
            
         }
     }
@@ -114,10 +115,6 @@ public class PlayerShooting : MonoBehaviour
         
     }
 
-    void ClampAngle()
-    {
-        _angle = Mathf.Clamp(_angle,0f,175f);
-    }
 
     void Shoot()
     {
@@ -126,6 +123,27 @@ public class PlayerShooting : MonoBehaviour
         bullet.gameObject.transform.rotation = _gun.gunData.gunObject.transform.rotation;
         bullet.gameObject.SetActive(true);
     
+    }
+
+    void Recoil()
+    {
+        if(_angle > 90 || _angle < -90)
+          {
+              StartCoroutine(AddRecoil(-5f));
+          }
+        
+        else
+           {
+             StartCoroutine(AddRecoil(5f));
+           }
+
+    }
+
+    IEnumerator AddRecoil(float amount)
+    {
+        _gun.gameObject.transform.localEulerAngles = new Vector3(0, 0, _gun.gameObject.transform.localEulerAngles.z + amount);
+        yield return new WaitForSeconds(0.2f);
+        _gun.gameObject.transform.localEulerAngles = new Vector3(0, 0, _gun.gameObject.transform.localEulerAngles.z - amount);
     }
 
     IEnumerator ResetFire()
