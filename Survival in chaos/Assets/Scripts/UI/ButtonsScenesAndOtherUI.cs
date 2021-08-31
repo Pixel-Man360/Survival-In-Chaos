@@ -33,6 +33,11 @@ public class ButtonsScenesAndOtherUI : MonoBehaviour
         _gameOverMainMenu?.onClick.AddListener(MainMenu);
     }
 
+    void OnEnable()
+    {
+      Time.timeScale = 1;    
+    }
+
     void PlayGame()
     {
        SceneManager.LoadSceneAsync(2);

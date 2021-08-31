@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 public class PlayerHealthControl : MonoBehaviour
 {
@@ -7,6 +8,8 @@ public class PlayerHealthControl : MonoBehaviour
 
    [SerializeField] private GameObject _gameOverPanel;
    private int _health = 3;
+
+   public static event Action OnPlayerDead;
    
    void OnEnable()
    {
@@ -32,6 +35,7 @@ public class PlayerHealthControl : MonoBehaviour
        else if(_health <= 0)
        {
            Time.timeScale = 0;
+           OnPlayerDead?.Invoke();
            _gameOverPanel.SetActive(true);
        }
        else

@@ -12,9 +12,8 @@ public class ThrowObject : MonoBehaviour
     [SerializeField] private int _throwDirection = -1;
     [SerializeField] private float _angleOffsetMin;
     [SerializeField] private float _angleOffsetMax;
-
+    
     private bool _canThrow = true;
-
     private bool _waveStart = false;
 
     void OnEnable()
@@ -37,9 +36,9 @@ public class ThrowObject : MonoBehaviour
 
           if (rotation != null)
            {
-               if(throwBreak <= 0.8f)
+               if(throwBreak <= 0.5f)
                {
-                   throwBreak = 0.8f;
+                   throwBreak = 0.5f;
                } 
                Throw(); 
            } 
@@ -56,6 +55,7 @@ public class ThrowObject : MonoBehaviour
 
     void Throw()
     {
+        SoundManager.instance.PlaySound("pop up");
         Item obj = ItemsPuller.instance.GetObject();
         obj.gameObject.transform.position = _launchPoint.transform.position;
         obj.gameObject.SetActive(true);

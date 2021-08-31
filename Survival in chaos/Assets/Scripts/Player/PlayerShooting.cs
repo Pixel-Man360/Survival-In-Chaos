@@ -20,6 +20,7 @@ public class PlayerShooting : MonoBehaviour
 
     public static event Action OnShoot;
     public static event Action<int,int> OnBulletReduce;
+    public static event Action OnShakeNeeded;
 
     void Start()
     {
@@ -62,13 +63,14 @@ public class PlayerShooting : MonoBehaviour
 
         if(Input.GetButton("Fire1") && _canShoot && !_isReloadPressed && !_isButtonHighlighted)
         {
-           _muzzleFlash.Play();
+           SoundManager.instance.PlaySound("shoot");
            OnShoot?.Invoke();
            Aim();
            ReloadCheck();
            Shoot();
+           OnShakeNeeded?.Invoke();
+           _muzzleFlash.Play();
            Recoil();
-           
         }
     }
 
@@ -129,12 +131,12 @@ public class PlayerShooting : MonoBehaviour
     {
         if(_angle > 90 || _angle < -90)
           {
-              StartCoroutine(AddRecoil(-5f));
+              StartCoroutine(AddRecoil(-4f));
           }
         
         else
            {
-             StartCoroutine(AddRecoil(5f));
+             StartCoroutine(AddRecoil(4f));
            }
 
     }
@@ -142,7 +144,7 @@ public class PlayerShooting : MonoBehaviour
     IEnumerator AddRecoil(float amount)
     {
         _gun.gameObject.transform.localEulerAngles = new Vector3(0, 0, _gun.gameObject.transform.localEulerAngles.z + amount);
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.15f);
         _gun.gameObject.transform.localEulerAngles = new Vector3(0, 0, _gun.gameObject.transform.localEulerAngles.z - amount);
     }
 
@@ -156,6 +158,7 @@ public class PlayerShooting : MonoBehaviour
 
     IEnumerator ReloadTheGun()
     {
+        SoundManager.instance.PlaySound("reload");
         _canShoot = false;
         yield return new WaitForSeconds(_reloadTime);
         _canShoot = true;
