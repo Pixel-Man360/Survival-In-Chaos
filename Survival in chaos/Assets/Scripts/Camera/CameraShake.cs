@@ -23,13 +23,13 @@ public class CameraShake : MonoBehaviour
     void OnEnable()
     {
       PlayerShooting.OnShakeNeeded += ShakeThatCam;
-      Item.OnItemHit += ShakeThatCam;
+      Balls.OnBallsHit += ShakeThatCam;
     }
 
     void OnDisable()
     {
       PlayerShooting.OnShakeNeeded -= ShakeThatCam;
-      Item.OnItemHit -= ShakeThatCam;
+      Balls.OnBallsHit -= ShakeThatCam;
     }
 
     

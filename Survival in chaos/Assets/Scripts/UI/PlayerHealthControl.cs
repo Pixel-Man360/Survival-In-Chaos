@@ -7,7 +7,7 @@ public class PlayerHealthControl : MonoBehaviour
    [SerializeField] private Image _healthBarFillImage;
 
    [SerializeField] private GameObject _gameOverPanel;
-   private int _health = 3;
+   private int _health = 100;
 
    public static event Action OnPlayerDead;
    
@@ -21,23 +21,25 @@ public class PlayerHealthControl : MonoBehaviour
        PlayerHealth.OnPlayerHit -= ChangeHealth;
    }
 
-   void ChangeHealth()
+   void ChangeHealth(int damage)
    {
-       _health--;
-
+       _health -= damage;
        _healthBar.value = _health;
 
-       if(_health == 1)
+       Debug.Log("Health: " + _health);
+
+       if(_health <= 20)
        {
            _healthBarFillImage.color = Color.red;
+            if(_health <= 0)
+            {
+                Time.timeScale = 0;
+                OnPlayerDead?.Invoke();
+                _gameOverPanel.SetActive(true);
+            }
        }
 
-       else if(_health <= 0)
-       {
-           Time.timeScale = 0;
-           OnPlayerDead?.Invoke();
-           _gameOverPanel.SetActive(true);
-       }
+       
        else
        {
            _healthBarFillImage.color = Color.green;

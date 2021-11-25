@@ -16,13 +16,13 @@ public class ScoreSystem : MonoBehaviour
 
     void OnEnable()
     {
-        Item.OnPointsGained += AddScore;
+        Balls.OnPointsGained += AddScore;
         PlayerHealthControl.OnPlayerDead += PlayerDied;
     }
 
     void OnDisable()
     {
-        Item.OnPointsGained -= AddScore;
+        Balls.OnPointsGained -= AddScore;
         PlayerHealthControl.OnPlayerDead -= PlayerDied;
     }
 

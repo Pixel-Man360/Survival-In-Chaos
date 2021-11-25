@@ -8,6 +8,7 @@ TagManager:
   - Bullet
   - Walls
   - Object
+  - Camera Size
   layers:
   - Default
   - TransparentFX
@@ -18,10 +19,10 @@ TagManager:
   - 
   - 
   - Post Process
-  - 
-  - 
-  - 
-  - 
+  - Bomb Damage Area
+  - Player
+  - Walls
+  - Camera Size
   - 
   - 
   - 

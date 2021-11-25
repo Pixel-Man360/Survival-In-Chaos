@@ -1,4 +1,4 @@
 ﻿
-public class PlayerBulletPuller : ObjectPooler<Bullet>
+public class PlayerBulletPuller : ObjectPool<Bullet>
 {
 }

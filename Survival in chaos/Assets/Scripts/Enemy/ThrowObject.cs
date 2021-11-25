@@ -6,15 +6,22 @@ public class ThrowObject : MonoBehaviour
 {
     [SerializeField] private float _speed;
     [SerializeField] private Transform _launchPoint;
+    [SerializeField] private Transform _canonNozzle;
     [SerializeField] private Transform _target;
     [SerializeField] private float _gravity = 9.8f;
-    public float throwBreak;
     [SerializeField] private int _throwDirection = -1;
     [SerializeField] private float _angleOffsetMin;
     [SerializeField] private float _angleOffsetMax;
+    public float throwBreak;
     
+    private float? rotation = 90f;
+
+    private float? angle = 45f;
     private bool _canThrow = true;
     private bool _waveStart = false;
+   
+    private bool _canRotate = true;
+
 
     void OnEnable()
     {
@@ -30,20 +37,30 @@ public class ThrowObject : MonoBehaviour
     
     void Update()
     {
+
         if(_canThrow && _waveStart)
         {
-          float? rotation = RotateLauncher();
 
           if (rotation != null)
            {
+              
                if(throwBreak <= 0.5f)
                {
                    throwBreak = 0.5f;
                } 
+
                Throw(); 
+               angle = CalculateAngle();
+               StartCoroutine(ResetRotation());
            } 
         }
-        
+
+        if(!_canThrow && _canRotate)
+        {
+            rotation = RotateLauncher();
+            
+        }
+
     }
 
     IEnumerator ResetThrowing()
@@ -53,10 +70,17 @@ public class ThrowObject : MonoBehaviour
         _canThrow = true;
     }
 
+    IEnumerator ResetRotation()
+    {
+        _canRotate = false;
+        yield return new WaitForSeconds(1f);
+        _canRotate = true;
+    }
+
     void Throw()
     {
         SoundManager.instance.PlaySound("pop up");
-        Item obj = ItemsPuller.instance.GetObject();
+        Balls obj = OrangeBallsPool.instance.GetObject();
         obj.gameObject.transform.position = _launchPoint.transform.position;
         obj.gameObject.SetActive(true);
         obj.gameObject.GetComponent<Rigidbody2D>().velocity = _speed * _throwDirection * _launchPoint.transform.right;
@@ -65,12 +89,18 @@ public class ThrowObject : MonoBehaviour
 
     float? RotateLauncher()
     {
-        float? angle = CalculateAngle();
+        Quaternion newRotation = Quaternion.Euler(0,0, 360 - (float)angle);
+
         if (angle != null)
-            _launchPoint.transform.localEulerAngles = new Vector3(0, 0, 360f - (float)angle);
+           {
+                _canonNozzle.transform.rotation = Quaternion.RotateTowards(_canonNozzle.transform.rotation, newRotation, 30f * Time.deltaTime);
+
+           }
 
         return angle;
     }
+
+
 
     float? CalculateAngle()
     {
@@ -98,6 +128,5 @@ public class ThrowObject : MonoBehaviour
         else
            return null;
 
- 
     }
 }
