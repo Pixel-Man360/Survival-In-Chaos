@@ -8,39 +8,38 @@ public class OrangeBalls : Balls, IReturnObject
     {
         if(other.gameObject.CompareTag("Bullet"))
         {
-            SoundManager.instance.PlaySound("explosion");
-            _rb.velocity = Vector2.zero;
-            _col.enabled = false;
-            _sprite.enabled = false;
-            _light.enabled = false;
-            _burst.Play();
-            base.BallsHitEvent();
-            base.PointsGainedEvent();
-            StartCoroutine(ReturnObj());
-               
+            BallHitBullet();
         }
 
         else if(other.gameObject.CompareTag("Player"))
         {
-            SoundManager.instance.PlaySound("explosion");
-            _rb.velocity = Vector2.zero;
-            _col.enabled = false;
-            _sprite.enabled = false;
-            _light.enabled = false;
-            _burst.Play();
-            base.BallsHitEvent();
-            StartCoroutine(ReturnObj());
+            
+            BallHitPlayer();
         }
 
         else if(other.gameObject.CompareTag("Walls"))
         {
-            _isWallHit = true;
+            StartCoroutine(BallHitWall(this.gameObject));
         }
     }
+
+    protected override void BallHitPlayer()
+    {
+        base.BallHitPlayer();
+        StartCoroutine(ReturnObj());
+    }
+
+    protected override void BallHitBullet()
+    {
+        base.BallHitBullet();
+        StartCoroutine(ReturnObj());
+    }
+    
+    
 
     public IEnumerator ReturnObj()
     {
         yield return new WaitForSeconds(0.5f);
-        OrangeBallsPool.instance.ReturnToPool(this);
+        ObjectPool.instance.ReturnToPool(this.gameObject);
     }
 }

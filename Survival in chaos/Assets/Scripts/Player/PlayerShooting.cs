@@ -10,6 +10,7 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] private Transform _shootPoint;
     [SerializeField] private float _reloadTime = 1f;
     [SerializeField] private ParticleSystem _muzzleFlash;
+    [SerializeField] private GameObject _bulletPrefab;
 
     private bool _canShoot = true;
     private float _angle;
@@ -68,7 +69,8 @@ public class PlayerShooting : MonoBehaviour
            Aim();
            ReloadCheck();
            Shoot();
-           OnShakeNeeded?.Invoke();
+        //    OnShakeNeeded?.Invoke();
+        CameraShake.instance.ShakeThatCam();
            _muzzleFlash.Play();
            Recoil();
         }
@@ -120,10 +122,10 @@ public class PlayerShooting : MonoBehaviour
 
     void Shoot()
     {
-        Bullet bullet =  PlayerBulletPuller.instance.GetObject();
-        bullet.gameObject.transform.position = _shootPoint.transform.position;
-        bullet.gameObject.transform.rotation = _gun.gunData.gunObject.transform.rotation;
-        bullet.gameObject.SetActive(true);
+        GameObject bullet =  ObjectPool.instance.GetObject(_bulletPrefab);
+        bullet.transform.position = _shootPoint.transform.position;
+        bullet.transform.rotation = _gun.gunData.gunObject.transform.rotation;
+        bullet.SetActive(true);
     
     }
 

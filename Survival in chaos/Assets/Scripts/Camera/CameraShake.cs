@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
@@ -8,29 +9,42 @@ public class CameraShake : MonoBehaviour
     [SerializeField] private float _shakeIntensity;
     [SerializeField] private float _shakeTime;
     [SerializeField] private CinemachineVirtualCamera _cam;
+    private CinemachineBasicMultiChannelPerlin _perlin;
     private float _startIntensity;
     private float _totalShakeTime;
-    private CinemachineBasicMultiChannelPerlin _perlin;
     private float _timer;
+
+    public static CameraShake instance;
+
     void Awake()
     {
-        _timer = 0f;
-        _cam = GetComponent<CinemachineVirtualCamera>();
-        _perlin =  _cam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+      if(instance == null)
+      {
+        instance = this;
+      }
+
+      else
+      {
+        Destroy(gameObject);
+        return;
+      }
+      _timer = 0f;
+      _cam = GetComponent<CinemachineVirtualCamera>();
+      _perlin =  _cam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
     }
 
-    void OnEnable()
-    {
-      PlayerShooting.OnShakeNeeded += ShakeThatCam;
-      Balls.OnBallsHit += ShakeThatCam;
-    }
+    // void OnEnable()
+    // {
+    //   PlayerShooting.OnShakeNeeded += ShakeThatCam;
+    //   Balls.OnBallsHit += ShakeThatCam;
+    // }
 
-    void OnDisable()
-    {
-      PlayerShooting.OnShakeNeeded -= ShakeThatCam;
-      Balls.OnBallsHit -= ShakeThatCam;
-    }
+    // void OnDisable()
+    // {
+    //   PlayerShooting.OnShakeNeeded -= ShakeThatCam;
+    //   Balls.OnBallsHit -= ShakeThatCam;
+    // }
 
     
     void Update()

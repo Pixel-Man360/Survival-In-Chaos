@@ -4,22 +4,27 @@ using UnityEngine;
 
 public class ThrowObject : MonoBehaviour
 {
-    [SerializeField] private float _speed;
+    [Header("Dependencies:")]
+    [SerializeField] private GameObject _ballPrefab;
     [SerializeField] private Transform _launchPoint;
     [SerializeField] private Transform _canonNozzle;
     [SerializeField] private Transform _target;
+    [SerializeField] private ParticleSystem _muzzleFlash;
+
+    [Header("Stats:")]
+    [SerializeField] private float _speed;
     [SerializeField] private float _gravity = 9.8f;
     [SerializeField] private int _throwDirection = -1;
     [SerializeField] private float _angleOffsetMin;
     [SerializeField] private float _angleOffsetMax;
+
     public float throwBreak;
     
     private float? rotation = 90f;
-
     private float? angle = 45f;
+
     private bool _canThrow = true;
     private bool _waveStart = false;
-   
     private bool _canRotate = true;
 
 
@@ -58,7 +63,6 @@ public class ThrowObject : MonoBehaviour
         if(!_canThrow && _canRotate)
         {
             rotation = RotateLauncher();
-            
         }
 
     }
@@ -80,10 +84,12 @@ public class ThrowObject : MonoBehaviour
     void Throw()
     {
         SoundManager.instance.PlaySound("pop up");
-        Balls obj = OrangeBallsPool.instance.GetObject();
-        obj.gameObject.transform.position = _launchPoint.transform.position;
-        obj.gameObject.SetActive(true);
-        obj.gameObject.GetComponent<Rigidbody2D>().velocity = _speed * _throwDirection * _launchPoint.transform.right;
+        _muzzleFlash.Play();
+        CameraShake.instance.ShakeThatCam();
+        GameObject obj = ObjectPool.instance.GetObject(_ballPrefab);
+        obj.transform.position = _launchPoint.transform.position;
+        obj.SetActive(true);
+        obj.GetComponent<Rigidbody2D>().velocity = _speed * _throwDirection * _launchPoint.transform.right;
         StartCoroutine(ResetThrowing());
     }
 

@@ -17,7 +17,7 @@ public class Bullet : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Walls"))
         {
-            PlayerBulletPuller.instance.ReturnToPool(this);
+            ObjectPool.instance.ReturnToPool(this.gameObject);
         }
     }
 
