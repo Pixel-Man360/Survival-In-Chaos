@@ -20838,8 +20838,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 841a978bf7e5d4745b9c8eac3c6f6651, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ballPrefab: {fileID: 8801040950412176422, guid: 3643731b890651946a1d1f21dea309ff,
-    type: 3}
+  _ballObj:
+  - ballPrefab: {fileID: 2832807647431050571, guid: 9d7d39028b76ebb4699c4111b4474561,
+      type: 3}
+    chance: 100
+    weight: 0
+  - ballPrefab: {fileID: 8801040950412176422, guid: 3643731b890651946a1d1f21dea309ff,
+      type: 3}
+    chance: 0
+    weight: 0
   _launchPoint: {fileID: 1974981453}
   _canonNozzle: {fileID: 1396827171}
   _target: {fileID: 1767545918}

@@ -5,7 +5,7 @@ using UnityEngine;
 public class ThrowObject : MonoBehaviour
 {
     [Header("Dependencies:")]
-    [SerializeField] private GameObject _ballPrefab;
+    [SerializeField] private BallSpawnData[] _ballObj;
     [SerializeField] private Transform _launchPoint;
     [SerializeField] private Transform _canonNozzle;
     [SerializeField] private Transform _target;
@@ -27,6 +27,14 @@ public class ThrowObject : MonoBehaviour
     private bool _waveStart = false;
     private bool _canRotate = true;
 
+    private double _accumulatedWeights;
+    private System.Random _rand = new System.Random();
+
+    
+    void Awake() 
+    {
+        CalculateWeights();
+    }
 
     void OnEnable()
     {
@@ -38,7 +46,21 @@ public class ThrowObject : MonoBehaviour
         GameManager.OnWaveStart -= WaveStarted;
     }
 
-    void WaveStarted(bool permission) => _waveStart = permission;
+    void WaveStarted(bool permission, int waveNum)
+    {
+        _waveStart = permission;
+
+        if(_waveStart)
+        return;
+
+        _ballObj[0].chance -= 10;
+        _ballObj[1].chance += 10;
+
+        _ballObj[0].chance = Mathf.Clamp(_ballObj[0].chance, 50f, 100f);
+        _ballObj[1].chance = Mathf.Clamp(_ballObj[1].chance, 0f, 50f);
+
+        CalculateWeights();
+    }
     
     void Update()
     {
@@ -86,7 +108,7 @@ public class ThrowObject : MonoBehaviour
         SoundManager.instance.PlaySound("pop up");
         _muzzleFlash.Play();
         CameraShake.instance.ShakeThatCam();
-        GameObject obj = ObjectPool.instance.GetObject(_ballPrefab);
+        GameObject obj = ObjectPool.instance.GetObject(_ballObj[GetRandomBallIndex()].ballPrefab);
         obj.transform.position = _launchPoint.transform.position;
         obj.SetActive(true);
         obj.GetComponent<Rigidbody2D>().velocity = _speed * _throwDirection * _launchPoint.transform.right;
@@ -99,8 +121,7 @@ public class ThrowObject : MonoBehaviour
 
         if (angle != null)
            {
-                _canonNozzle.transform.rotation = Quaternion.RotateTowards(_canonNozzle.transform.rotation, newRotation, 30f * Time.deltaTime);
-
+               _canonNozzle.transform.rotation = Quaternion.RotateTowards(_canonNozzle.transform.rotation, newRotation, 30f * Time.deltaTime);
            }
 
         return angle;
@@ -133,6 +154,31 @@ public class ThrowObject : MonoBehaviour
 
         else
            return null;
+
+    }
+
+
+    private void CalculateWeights()
+    {
+        _accumulatedWeights = 0f;
+
+        foreach (BallSpawnData data in _ballObj)
+        {
+            _accumulatedWeights += data.chance;
+            data.weight = _accumulatedWeights;
+        }
+    }
+
+    private int GetRandomBallIndex()
+    {
+        double r = _rand.NextDouble() * _accumulatedWeights;
+
+        for(int i = 0; i < _ballObj.Length; i++)
+            if(_ballObj[i].weight >= r) 
+              return i;
+        
+        
+        return 0;
 
     }
 }

@@ -28,12 +28,14 @@ public class GameManager : MonoBehaviour
 
     public GameState gameState{get; private set;}
 
-    public static event Action<bool> OnWaveStart;
+    public static event Action<bool, int> OnWaveStart;
+
     void Awake()
     {
         gameState = GameState.GameStart;
         _timeForEachWave = _initialTimeForEachWave;
     }
+
     void ChangeState(GameState state)
     {
        gameState = state;
@@ -95,7 +97,7 @@ public class GameManager : MonoBehaviour
            case GameState.Wavebreak:
                 if(_waveBreak)
                 {
-                   OnWaveStart?.Invoke(false);
+                   OnWaveStart?.Invoke(false, _waveNumber);
                   _initialTimeForEachWave += _extraTimeForEachWave;
 
                         if(_initialTimeForEachWave >= 90f)
@@ -125,7 +127,7 @@ public class GameManager : MonoBehaviour
         _waveSystemUI.ChangeNumberText(text);
         yield return new WaitForSeconds(_waitTimeToShowNumberText);
         _waveSystemUI.ChangeNumberText(" ");
-        OnWaveStart?.Invoke(true);
+        OnWaveStart?.Invoke(true, _waveNumber);
         
     }
 
