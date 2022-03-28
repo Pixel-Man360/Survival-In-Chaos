@@ -104,6 +104,11 @@ public class RedBalls : Balls, IReturnObject
         }
     }
 
+    protected override void ExplosionShake()
+    {
+        CameraShake.instance.ShakeThatCam(4f, 0.25f);
+    }
+
     protected override void BallHitPlayer()
     {
         _ballDamage = 50;
@@ -112,6 +117,14 @@ public class RedBalls : Balls, IReturnObject
     }
 
     protected override void BallHitBullet()
+    {
+        CheckBlastRadiusForPlayer();
+
+        base.BallHitBullet();
+        StartCoroutine(ReturnObj());
+    }
+
+    void CheckBlastRadiusForPlayer()
     {
         Collider2D collider = Physics2D.OverlapCircle(transform.position, _explosionDamageRange, _playerLayer);
         
@@ -131,9 +144,6 @@ public class RedBalls : Balls, IReturnObject
                 _ballDamage = (distanceVal >= 5.8)? 10 : 30;
             }
         }
-
-        base.BallHitBullet();
-        StartCoroutine(ReturnObj());
     }
     
     

@@ -107,7 +107,7 @@ public class ThrowObject : MonoBehaviour
     {
         SoundManager.instance.PlaySound("pop up");
         _muzzleFlash.Play();
-        CameraShake.instance.ShakeThatCam();
+        CameraShake.instance.ShakeThatCam(4f, 0.2f);
         GameObject obj = ObjectPool.instance.GetObject(_ballObj[GetRandomBallIndex()].ballPrefab);
         obj.transform.position = _launchPoint.transform.position;
         obj.SetActive(true);

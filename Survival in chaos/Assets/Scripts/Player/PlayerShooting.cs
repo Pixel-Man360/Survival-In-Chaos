@@ -70,7 +70,7 @@ public class PlayerShooting : MonoBehaviour
            ReloadCheck();
            Shoot();
         //    OnShakeNeeded?.Invoke();
-        CameraShake.instance.ShakeThatCam();
+        CameraShake.instance.ShakeThatCam(3f, 0.2f);
            _muzzleFlash.Play();
            Recoil();
         }

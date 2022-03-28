@@ -73,7 +73,7 @@ public class Balls : MonoBehaviour, IDamager
         _light.enabled = false;
         _burst.Play();
        // OnBallsHit?.Invoke();
-        CameraShake.instance.ShakeThatCam();
+        ExplosionShake();
     }
 
     protected virtual void BallHitBullet()
@@ -87,7 +87,7 @@ public class Balls : MonoBehaviour, IDamager
         _burst.Play();
       
         //OnBallsHit?.Invoke();
-        CameraShake.instance.ShakeThatCam();
+        ExplosionShake();
         OnPointsGained?.Invoke(_point);
     }
 
@@ -99,7 +99,7 @@ public class Balls : MonoBehaviour, IDamager
 
         SoundManager.instance.PlaySound("explosion");
        // OnBallsHit?.Invoke();
-        CameraShake.instance.ShakeThatCam();
+        ExplosionShake();
         _rb.velocity = Vector2.zero;
         _col.enabled = false;
         _sprite.enabled = false;
@@ -109,8 +109,11 @@ public class Balls : MonoBehaviour, IDamager
 
         yield return new WaitForSeconds(0.5f);
         ObjectPool.instance.ReturnToPool(obj);
-        
-        
+    }
+
+    protected virtual void ExplosionShake()
+    {
+        CameraShake.instance.ShakeThatCam(3f, 0.15f);
     }
 
 
