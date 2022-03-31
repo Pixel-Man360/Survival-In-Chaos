@@ -92,10 +92,10 @@ public class Balls : MonoBehaviour, IDamager
     }
 
 
-    protected IEnumerator BallHitWall(GameObject obj)
+    protected IEnumerator BallHitWall(GameObject obj, float time)
     {
         
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(time);
 
         SoundManager.instance.PlaySound("explosion");
        // OnBallsHit?.Invoke();

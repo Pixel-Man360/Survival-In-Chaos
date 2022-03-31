@@ -11654,6 +11654,10 @@ MonoBehaviour:
       type: 3}
     chance: 0
     weight: 0
+  - ballPrefab: {fileID: 2832807647431050571, guid: 598023654cc2b4babb4a5bcaa615a9a1,
+      type: 3}
+    chance: 5
+    weight: 0
   _launchPoint: {fileID: 2063849022}
   _canonNozzle: {fileID: 1461066985}
   _target: {fileID: 881096420}

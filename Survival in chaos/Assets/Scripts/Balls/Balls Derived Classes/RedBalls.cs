@@ -100,7 +100,7 @@ public class RedBalls : Balls, IReturnObject
 
         else if(other.gameObject.CompareTag("Walls"))
         {
-            StartCoroutine(BallHitWall(this.gameObject));
+            StartCoroutine(BallHitWall(this.gameObject, 8f));
         }
     }
 

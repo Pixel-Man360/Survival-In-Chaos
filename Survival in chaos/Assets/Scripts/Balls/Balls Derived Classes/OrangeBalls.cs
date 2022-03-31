@@ -19,7 +19,7 @@ public class OrangeBalls : Balls, IReturnObject
 
         else if(other.gameObject.CompareTag("Walls"))
         {
-            StartCoroutine(BallHitWall(this.gameObject));
+            StartCoroutine(BallHitWall(this.gameObject, 10f));
         }
     }
 
