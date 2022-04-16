@@ -6,20 +6,20 @@ public class OrangeBalls : Balls, IReturnObject
 {
     protected override void HandleCollisions(Collision2D other)
     {
-        if(other.gameObject.CompareTag("Bullet"))
+        if (other.gameObject.CompareTag("Bullet"))
         {
             BallHitBullet();
         }
 
-        else if(other.gameObject.CompareTag("Player"))
+        else if (other.gameObject.CompareTag("Player"))
         {
-            
+
             BallHitPlayer();
         }
 
-        else if(other.gameObject.CompareTag("Walls"))
+        else if (other.gameObject.CompareTag("Walls"))
         {
-            StartCoroutine(BallHitWall(this.gameObject, 10f));
+            BallHitWall(this.gameObject);
         }
     }
 
@@ -34,8 +34,8 @@ public class OrangeBalls : Balls, IReturnObject
         base.BallHitBullet();
         StartCoroutine(ReturnObj());
     }
-    
-    
+
+
 
     public IEnumerator ReturnObj()
     {

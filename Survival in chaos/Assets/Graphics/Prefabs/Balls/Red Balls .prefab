@@ -14788,7 +14788,7 @@ MonoBehaviour:
   _burst: {fileID: 6733923328353974787}
   _fallSpeed: 2
   _ballDamage: 50
-  _point: 100
+  _point: 250
   _target: {fileID: 0}
   _playerLayer:
     serializedVersion: 2

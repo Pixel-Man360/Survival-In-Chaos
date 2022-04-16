@@ -4,43 +4,42 @@ using UnityEngine;
 
 public class PurpleBalls : Balls, IReturnObject
 {
-    bool firstHit = false;
-    bool secondHit = false;
-    bool thirdHit = false;
-    
+    private int _hitCount = 0;
+
     protected override void HandleCollisions(Collision2D other)
     {
-        if(other.gameObject.CompareTag("Bullet"))
+        if (other.gameObject.CompareTag("Bullet"))
         {
             BallHitBullet();
         }
 
-        else if(other.gameObject.CompareTag("Player"))
+        else if (other.gameObject.CompareTag("Player"))
         {
             BallHitPlayer();
         }
 
-        else if(other.gameObject.CompareTag("Walls"))
+        else if (other.gameObject.CompareTag("Walls"))
         {
-            StartCoroutine(BallHitWall(this.gameObject, 5f));
+            BallHitWall(this.gameObject);
         }
     }
 
     protected override void BallHitPlayer()
     {
-        _ballDamage = 50;
         base.BallHitPlayer();
         StartCoroutine(ReturnObj());
     }
 
     protected override void BallHitBullet()
     {
-        // CheckBlastRadiusForPlayer();
+        _hitCount++;
 
-        // base.BallHitBullet();
-        // StartCoroutine(ReturnObj());
-
-        //Tripple Shot Kill
+        if (_hitCount >= 3)
+        {
+            _hitCount = 0;
+            base.BallHitBullet();
+            StartCoroutine(ReturnObj());
+        }
     }
 
     public IEnumerator ReturnObj()

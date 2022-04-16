@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -39,15 +40,15 @@ public class Balls : MonoBehaviour, IDamager
     }
 
 
-    protected virtual void HandleCollisions(Collision2D other){}
+    protected virtual void HandleCollisions(Collision2D other) { }
 
-    void FixedUpdate() 
+    void FixedUpdate()
     {
-        if(_rb.velocity.y < 0)
-           _rb.gravityScale = _fallSpeed;
-        
-        else 
-          _rb.gravityScale = 1f;
+        if (_rb.velocity.y < 0)
+            _rb.gravityScale = _fallSpeed;
+
+        else
+            _rb.gravityScale = 1f;
     }
 
     void Update()
@@ -57,9 +58,9 @@ public class Balls : MonoBehaviour, IDamager
 
         // else
         // {
-            
+
         // }
-        
+
     }
 
 
@@ -72,7 +73,7 @@ public class Balls : MonoBehaviour, IDamager
         _trail.enabled = false;
         _light.enabled = false;
         _burst.Play();
-       // OnBallsHit?.Invoke();
+        // OnBallsHit?.Invoke();
         ExplosionShake();
     }
 
@@ -85,31 +86,36 @@ public class Balls : MonoBehaviour, IDamager
         _trail.enabled = false;
         _light.enabled = false;
         _burst.Play();
-      
+
         //OnBallsHit?.Invoke();
         ExplosionShake();
         OnPointsGained?.Invoke(_point);
     }
 
 
-    protected IEnumerator BallHitWall(GameObject obj, float time)
+    protected void BallHitWall(GameObject obj)
     {
-        
-        yield return new WaitForSeconds(time);
+        if (_rb.velocity.x <= -0.001f && _rb.velocity.x >= -0.005f)
+        {
+            SoundManager.instance.PlaySound("explosion");
+            // OnBallsHit?.Invoke();
+            ExplosionShake();
+            _rb.velocity = Vector2.zero;
+            _col.enabled = false;
+            _sprite.enabled = false;
+            _trail.enabled = false;
+            _light.enabled = false;
+            _burst.Play();
+            ReturnObjAfterHittingWall(obj);
+        }
+    }
 
-        SoundManager.instance.PlaySound("explosion");
-       // OnBallsHit?.Invoke();
-        ExplosionShake();
-        _rb.velocity = Vector2.zero;
-        _col.enabled = false;
-        _sprite.enabled = false;
-        _trail.enabled = false;
-        _light.enabled = false;
-        _burst.Play();
-
-        yield return new WaitForSeconds(0.5f);
+    IEnumerator ReturnObjAfterHittingWall(GameObject obj)
+    {
+        yield return new WaitForSeconds(1f);
         ObjectPool.instance.ReturnToPool(obj);
     }
+
 
     protected virtual void ExplosionShake()
     {
@@ -119,6 +125,6 @@ public class Balls : MonoBehaviour, IDamager
 
     public int GetDamageValue() => _ballDamage;
 
-    
+
 
 }

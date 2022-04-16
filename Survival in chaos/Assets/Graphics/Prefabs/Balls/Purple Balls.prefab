@@ -222,7 +222,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 0.8773585, g: 0.46260357, b: 0.086908154, a: 1}
-      maxColor: {r: 0.1254902, g: 0.3372549, b: 0.89411765, a: 1}
+      maxColor: {r: 0.44705883, g: 0.1254902, b: 0.89411765, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -4835,7 +4835,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 227850736708993355}
-  m_LocalRotation: {x: -0, y: -0, z: -0.12795039, w: 0.9917806}
+  m_LocalRotation: {x: -0, y: -0, z: -0.35366747, w: 0.9353712}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -4857,8 +4857,8 @@ MonoBehaviour:
   m_LightType: 3
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
-  m_Color: {r: 0.20554505, g: 0.49666935, b: 0.965, a: 1}
-  m_Intensity: 3
+  m_Color: {r: 0.5079592, g: 0.18999998, b: 0.95, a: 1}
+  m_Intensity: 2
   m_LightVolumeOpacity: 0
   m_ApplyToSortingLayers: 00000000
   m_LightCookieSprite: {fileID: 0}
@@ -4869,8 +4869,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensity: 0
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 1.678063
-  m_PointLightOuterRadius: 1.9923661
+  m_PointLightInnerRadius: 2.4709811
+  m_PointLightOuterRadius: 4.209759
   m_PointLightDistance: 3
   m_PointLightQuality: 1
   m_ShapeLightParametricSides: 5
@@ -4956,7 +4956,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 8b28f7e1e4e71bf4d919b9e681cf9f26, type: 3}
-  m_Color: {r: 0.1254902, g: 0.33747965, b: 0.89411765, a: 1}
+  m_Color: {r: 0.44564962, g: 0.1254902, b: 0.89411765, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -5036,7 +5036,7 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.8980392, g: 0.65223795, b: 0.37647057, a: 1}
+      key0: {r: 0.59248984, g: 0.37552944, b: 0.89411765, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 0.39607844}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -5083,9 +5083,9 @@ GameObject:
   - component: {fileID: 2832807647431050548}
   - component: {fileID: 2832807647431050550}
   - component: {fileID: 2832807647431050549}
-  - component: {fileID: 1818629902}
+  - component: {fileID: 691040397595147617}
   m_Layer: 0
-  m_Name: Blue Balls
+  m_Name: Purple Balls
   m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5100,7 +5100,7 @@ Transform:
   m_GameObject: {fileID: 2832807647431050571}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.85, y: 0.85, z: 0.85}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 2832807646209338983}
   - {fileID: 1939444591}
@@ -5135,8 +5135,8 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0.65
+  m_Mass: 20
+  m_LinearDrag: 1
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 6200000, guid: 20e881a2faa08e444944dae698d368cf, type: 2}
@@ -5144,7 +5144,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &1818629902
+--- !u!114 &691040397595147617
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5153,7 +5153,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2832807647431050571}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fea84ba5bf4d441598b3400b326eb4f, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d733ffc1960543f3a62c5693888095a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _rb: {fileID: 2832807647431050549}
@@ -5162,8 +5162,6 @@ MonoBehaviour:
   _trail: {fileID: 2832807646209338976}
   _light: {fileID: 8856655164662873469}
   _burst: {fileID: 1939444590}
-  _fallSpeed: 1.7
-  _ballDamage: 10
-  _point: 0
-  _powerUp:
-  - {fileID: 7548577623970935789, guid: 2bc131ed0005f4184a3628e339f3ca19, type: 3}
+  _fallSpeed: 2.7
+  _ballDamage: 50
+  _point: 200

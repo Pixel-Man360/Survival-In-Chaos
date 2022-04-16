@@ -10,19 +10,19 @@ public class BlueBalls : Balls, IReturnObject
 
     protected override void HandleCollisions(Collision2D other)
     {
-        if(other.gameObject.CompareTag("Bullet"))
+        if (other.gameObject.CompareTag("Bullet"))
         {
             BallHitBullet();
         }
 
-        else if(other.gameObject.CompareTag("Player"))
+        else if (other.gameObject.CompareTag("Player"))
         {
             BallHitPlayer();
         }
 
-        else if(other.gameObject.CompareTag("Walls"))
+        else if (other.gameObject.CompareTag("Walls"))
         {
-            StartCoroutine(BallHitWall(this.gameObject, 4f));
+            BallHitWall(this.gameObject);
         }
     }
 
@@ -41,7 +41,7 @@ public class BlueBalls : Balls, IReturnObject
     {
         base.BallHitBullet();
         StartCoroutine(ReturnAndGetPowerUp());
-        
+
     }
 
     public IEnumerator ReturnObj()

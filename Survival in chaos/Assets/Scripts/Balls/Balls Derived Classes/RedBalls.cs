@@ -52,15 +52,15 @@ public class RedBalls : Balls, IReturnObject
     //                 print("Damage 30%");
     //             }
     //         }
-            
+
     //     }
     // }
-   
-    void Awake() 
+
+    void Awake()
     {
         _target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
-    
+
     // void Update()
     // {
     //      float dotProduct =  Vector3.Dot(transform.up, Vector3.Normalize(transform.position - _target.position));
@@ -88,19 +88,19 @@ public class RedBalls : Balls, IReturnObject
 
     protected override void HandleCollisions(Collision2D other)
     {
-        if(other.gameObject.CompareTag("Bullet"))
+        if (other.gameObject.CompareTag("Bullet"))
         {
             BallHitBullet();
         }
 
-        else if(other.gameObject.CompareTag("Player"))
+        else if (other.gameObject.CompareTag("Player"))
         {
             BallHitPlayer();
         }
 
-        else if(other.gameObject.CompareTag("Walls"))
+        else if (other.gameObject.CompareTag("Walls"))
         {
-            StartCoroutine(BallHitWall(this.gameObject, 8f));
+            BallHitWall(this.gameObject);
         }
     }
 
@@ -127,26 +127,26 @@ public class RedBalls : Balls, IReturnObject
     void CheckBlastRadiusForPlayer()
     {
         Collider2D collider = Physics2D.OverlapCircle(transform.position, _explosionDamageRange, _playerLayer);
-        
+
         Debug.Log(collider);
-        if(collider != null && collider.gameObject.CompareTag("Player"))
+        if (collider != null && collider.gameObject.CompareTag("Player"))
         {
-            float dotProduct =  Vector3.Dot(transform.up, Vector3.Normalize(transform.position - _target.position));
+            float dotProduct = Vector3.Dot(transform.up, Vector3.Normalize(transform.position - _target.position));
             float distanceVal = Vector3.Distance(transform.position, _target.position);
 
-            if(dotProduct >= 0.85)
+            if (dotProduct >= 0.85)
             {
-                _ballDamage = (distanceVal >= 6.4)? 10 : 30;
+                _ballDamage = (distanceVal >= 6.4) ? 10 : 30;
             }
 
-            else 
+            else
             {
-                _ballDamage = (distanceVal >= 5.8)? 10 : 30;
+                _ballDamage = (distanceVal >= 5.8) ? 10 : 30;
             }
         }
     }
-    
-    
+
+
 
     public IEnumerator ReturnObj()
     {
